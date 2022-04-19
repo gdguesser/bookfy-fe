@@ -34,6 +34,7 @@ import TextInput from "./forms/TextInput.vue"
 import FormTag from "./forms/FormTag.vue"
 import { store } from "./store.js"
 import router from ".././router/index.js"
+import notie from "notie"
 
 export default {
     name: "AppLogin",
@@ -60,6 +61,10 @@ export default {
             .then((response) => {
                 if (response.error) {
                     console.log("error:", response.message);
+                    notie.alert({
+                        type: "error",
+                        text: response.message
+                    })
                 } else {
                     console.log("Token: ", response.data.token.token);
                     store.token = response.data.token.token;
