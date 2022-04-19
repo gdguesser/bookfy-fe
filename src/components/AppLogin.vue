@@ -32,6 +32,9 @@
 <script>
 import TextInput from "./forms/TextInput.vue"
 import FormTag from "./forms/FormTag.vue"
+import { store } from "./store.js"
+import router from ".././router/index.js"
+
 export default {
     name: "AppLogin",
     components: {
@@ -54,11 +57,13 @@ export default {
 
             fetch("http://localhost:8081/users/login", requestOptions)
             .then((response) => response.json())
-            .then((data) => {
-                if (data.error) {
-                    console.log("error:", data.message);
+            .then((response) => {
+                if (response.error) {
+                    console.log("error:", response.message);
                 } else {
-                    console.log(data);
+                    console.log("Token: ", response.data.token.token);
+                    store.token = response.data.token.token;
+                    router.push("/");
                 }
             })
         }
@@ -67,6 +72,7 @@ export default {
         return {
             email: "",
             password: "",
+            store,
         }
     },
 }
