@@ -1,5 +1,5 @@
 import { store } from "./store.js"
-import { router } from "./../router/index.js"
+import router from "./../router/index.js"
 
 let Security = {
     //make sure user is authenticated
