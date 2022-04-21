@@ -87,6 +87,8 @@
 <script>
 import { store } from "./store.js";
 import router from "./../router/index.js";
+import notie from "notie";
+import Security from "./security.js";
 
 export default {
   data() {
@@ -100,16 +102,17 @@ export default {
         token: store.token,
       };
 
-      const requestOptions = {
-        method: "POST",
-        body: JSON.stringify(payload),
-      };
-
-      fetch(process.env.VUE_APP_API_URL + "/users/logout", requestOptions)
+      fetch(
+        process.env.VUE_APP_API_URL + "/users/logout",
+        Security.requestOptions(payload)
+      )
         .then((response) => response.json())
         .then((response) => {
           if (response.error) {
-            console.log(response.message);
+            notie.alert({
+              type: "error",
+              text: response.message,
+            });
           } else {
             store.token = "";
             store.user = {};
