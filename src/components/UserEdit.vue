@@ -174,7 +174,7 @@ export default {
           };
 
           fetch(
-            process.env.VUE_APP_API_URL + "/admin/user/delete",
+            process.env.VUE_APP_API_URL + "/admin/users/delete",
             Security.requestOptions(payload)
           )
             .then((response) => response.json)
