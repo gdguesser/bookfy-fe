@@ -54,7 +54,8 @@
           <hr />
           <div class="float-start">
             <input type="submit" class="btn btn-primary me-2" value="Save" />
-            <router-link to="/admin/users" class="btn btn-outline-secundary">Cancel</router-link
+            <router-link to="/admin/users" class="btn btn-outline-secundary"
+              >Cancel</router-link
             >
           </div>
           <div class="float-end">
@@ -62,11 +63,13 @@
               v-if="
                 this.$route.params.userId > 0 &&
                 parseInt(String(this.$route.params.userId), 10) !==
-                  store.user.id"
+                  store.user.id
+              "
               class="btn btn-danger"
               href="javascript:void(0);"
               @click="confirmDelete(this.user.id)"
-            >Delete</a>
+              >Delete</a
+            >
           </div>
           <div class="clearfix"></div>
         </form-tag>
@@ -80,7 +83,7 @@ import Security from "./security.js";
 import FormTag from "./forms/FormTag.vue";
 import TextInput from "./forms/TextInput.vue";
 import notie from "notie";
-import {store} from "./store.js";
+import { store } from "./store.js";
 
 export default {
   beforeMount() {
@@ -88,19 +91,24 @@ export default {
 
     if (parseInt(String(this.$route.params.userId), 10) > 0) {
       //TODO: editing a existing user
-      fetch(process.env.VUE_APP_API_URL + "/admin/user/" + this.$route.params.userId, Security.requestOptions(""))
-      .then((response) => response.json())
-      .then((data) => {
+      fetch(
+        process.env.VUE_APP_API_URL +
+          "/admin/user/" +
+          this.$route.params.userId,
+        Security.requestOptions("")
+      )
+        .then((response) => response.json())
+        .then((data) => {
           if (data.error) {
-              notie.alert({
+            notie.alert({
               type: "error",
               text: data.message,
             });
           } else {
-              this.user = data;
-              this.user.password = "";
+            this.user = data;
+            this.user.password = "";
           }
-      });
+        });
     }
   },
   data() {
@@ -154,8 +162,37 @@ export default {
           });
         });
     },
-    confirmDelete() {
-        
+    confirmDelete(id) {
+      notie.confirm({
+        text: "Are you sure you want to delete this user?",
+        submitText: "Delete",
+        submitCallback: function () {
+          console.log("Will delete", id);
+
+          let payload = {
+            id: id,
+          };
+
+          fetch(
+            process.env.VUE_APP_API_URL + "/admin/user/delete",
+            Security.requestOptions(payload)
+          )
+            .then((response) => response.json)
+            .then((data) => {
+              if (data.error) {
+                notie.alert({
+                  type: "error",
+                  text: data.message,
+                });
+              } else {
+                notie.alert({
+                  type: "success",
+                  text: "User deleted",
+                });
+              }
+            });
+        },
+      });
     },
   },
 };
