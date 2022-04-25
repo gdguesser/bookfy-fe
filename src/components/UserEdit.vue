@@ -149,7 +149,7 @@ export default {
           }
         })
         .catch((error) => {
-          this.$emit("error", data.message);
+          this.$emit("error", error.message);
         });
     },
     confirmDelete(id) {
@@ -170,7 +170,7 @@ export default {
               if (data.error) {
                 this.$emit("error", data.message);
               } else {
-                this.$emit("success ", "User deleted");
+                this.$emit("success", "Changes saved");
                 router.push("/admin/users")
               }
             });

@@ -60,7 +60,7 @@ export default {
         text: msg,
       });
     },
-    warning() {
+    warning(msg) {
       notie.alert({
         type: "warning",
         text: msg,

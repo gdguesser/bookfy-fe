@@ -106,8 +106,8 @@ export default {
         Security.requestOptions(payload)
       )
         .then((response) => response.json())
-        .then((response) => {
-          if (response.error) {
+        .then((data) => {
+          if (data.error) {
             this.$emit("error", data.message);
           } else {
             store.token = "";
