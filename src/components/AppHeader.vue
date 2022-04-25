@@ -87,7 +87,6 @@
 <script>
 import { store } from "./store.js";
 import router from "./../router/index.js";
-import notie from "notie";
 import Security from "./security.js";
 
 export default {
@@ -109,10 +108,7 @@ export default {
         .then((response) => response.json())
         .then((response) => {
           if (response.error) {
-            notie.alert({
-              type: "error",
-              text: response.message,
-            });
+            this.$emit("error", data.message);
           } else {
             store.token = "";
             store.user = {};
