@@ -87,6 +87,19 @@ export default {
 
     if (parseInt(String(this.$route.params.userId), 10) > 0) {
       //TODO: editing a existing user
+      fetch(process.env.VUE_APP_API_URL + "/admin/user/" + this.$route.params.userId, Security.requestOptions(""))
+      .then((response) => response.json())
+      .then((data) => {
+          if (data.error) {
+              notie.alert({
+              type: "error",
+              text: data.message,
+            });
+          } else {
+              this.user = data;
+              this.user.password = "";
+          }
+      });
     }
   },
   data() {
