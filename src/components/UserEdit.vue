@@ -51,6 +51,29 @@
             :value="user.password"
             name="password"
           ></text-input>
+
+          <div class="form-check">
+            <input
+              v-model="user.active"
+              class="form-check-input"
+              type="radio"
+              id="user-active"
+              :value="1"
+            />
+            <label class="form-check-label" for="user-active">Active</label>
+          </div>
+
+          <div class="form-check">
+            <input
+              v-model="user.active"
+              class="form-check-input"
+              type="radio"
+              id="user-active-2"
+              :value="0"
+            />
+            <label class="form-check-label" for="user-active-2">Inactive</label>
+          </div>
+
           <hr />
           <div class="float-start">
             <input type="submit" class="btn btn-primary me-2" value="Save" />
@@ -84,7 +107,7 @@ import FormTag from "./forms/FormTag.vue";
 import TextInput from "./forms/TextInput.vue";
 import notie from "notie";
 import { store } from "./store.js";
-import router from ".././router/index.js"
+import router from ".././router/index.js";
 
 export default {
   beforeMount() {
@@ -117,6 +140,7 @@ export default {
         last_name: "",
         email: "",
         password: "",
+        active: 0,
       },
       store,
     };
@@ -133,6 +157,7 @@ export default {
         last_name: this.user.last_name,
         email: this.user.email,
         password: this.user.password,
+        active: this.user.active,
       };
 
       fetch(
