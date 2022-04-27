@@ -34,7 +34,7 @@ let Security = {
             let requestOptions = {
                 method: "POST",
                 body: JSON.stringify(payload),
-                headers, headers,
+                headers: headers,
             }
 
             fetch(process.env.VUE_APP_API_URL + "/validate-token", requestOptions)
